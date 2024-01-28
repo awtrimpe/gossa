@@ -1,13 +1,13 @@
 :root {
-  --carolinaBlue: #87BCDE;
-  --orange: #FFCEA2;
-  --lightGreen: #A2BFBD;
-  --darkGreen: #425C5A;
+  --redPlum: #782B42;
+  --goldCanyon: #C6AC7E;
+  --chestnutBrown: #875943;
+  --darkOnyx: #373539;
 }
 
 /* hello standards 👋🏻 */
 ::-webkit-scrollbar {
-    background: var(--darkGreen);
+    background: var(--darkOnyx);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -15,18 +15,18 @@
 }
 
 html {
-  color: var(--carolinaBlue);
-  background-color: var(--darkGreen);
+  color: var(--chestnutBrown);
+  background-color: var(--darkOnyx);
   font-size: 1.5em;
   font-family: Helvetica, Arial, sans-serif;
   overflow-x: hidden;
-  scrollbar-color: gray var(--darkGreen);
+  scrollbar-color: gray var(--darkOnyx);
   -webkit-tap-highlight-color: transparent;
   transition: all 0.3s ease-in-out;
 }
 
 a {
-  color: var(--orange);
+  color: var(--goldCanyon);
   text-decoration: none;
   background-color: transparent !important;
   outline: 0;
@@ -37,7 +37,7 @@ a:hover {
 }
 
 a.linkSelected {
-  border-bottom: .01em solid var(--lightGreen);
+  border-bottom: .01em solid var(--chestnutBrown);
 }
 
 tr {
@@ -61,7 +61,7 @@ td.iconRow {
   text-align: -webkit-center;
   height: 25px;
   width: 25px;
-  background-color: var(--lightGreen);
+  background-color: var(--redPlum);
   border-radius: 50%;
   padding: 0.5em;
   display: flex;
@@ -83,6 +83,10 @@ td.display-name {
   max-width: 50%;
 }
 
+td.display-name .list-links {
+  white-space: normal;
+}
+
 td.image-preview {
   width: 5em;
   height: 5em;
@@ -102,6 +106,7 @@ td.image-preview {
   max-width: 10em;
   position: absolute;
   top: -50%;
+  right: 0;
 }
 
 .image-preview:hover .image-preview-hover {
@@ -113,11 +118,11 @@ main {
 }
 
 footer {
-  background-color: var(--lightGreen);
+  background-color: var(--chestnutBrown);
   padding: 1em;
   text-align: center;
   border-radius: 1em 1em 0 0;
-  color: var(--darkGreen);
+  color: var(--darkOnyx);
 }
 
 /********************* 
@@ -135,7 +140,7 @@ IDs
 }
 
 #icHolder h1:hover {
-  color: var(--lightGreen);
+  color: var(--chestnutBrown);
   cursor: pointer;
 }
 
@@ -191,7 +196,7 @@ IDs
 }
 
 #linkTable tr:not(:last-child) {
-  border-bottom: solid 1px var(--carolinaBlue);
+  border-bottom: solid 1px var(--redPlum);
 }
 
 #drop-grid {
@@ -222,7 +227,7 @@ IDs
 
 #text-editor {
   font-family: monospace;
-  background-color: var(--darkGreen);
+  background-color: var(--darkOnyx);
   position: fixed;
   left: 0px;
   right: 0px;
@@ -311,7 +316,7 @@ IDs
 #helpTable td {
   width: 200px;
   padding: 9px;
-  border: 1px solid var(--orange);
+  border: 1px solid var(--goldCanyon);
   color: white;
   font-size: 18px;
   margin: 0;
@@ -344,9 +349,9 @@ Classes
  ********************/
 
 .title {
-  background-color: var(--lightGreen);
+  background-color: var(--chestnutBrown);
   padding-left: 1em;
-  color: var(--darkGreen);
+  color: var(--goldCanyon);
   font-family: Optima,Segoe,Segoe UI,Candara,Calibri,Arial,sans-serif;
   margin-bottom: 1em;
   border-radius: 0 0 1em 1em;
@@ -410,7 +415,7 @@ Classes
   bottom: 0px;
   max-height: 50%;
   overflow-x: hidden;
-  background-color: var(--darkGreen);
+  background-color: var(--darkOnyx);
 }
 
 .barName {
@@ -458,8 +463,11 @@ Classes
 }
 
 .icon-large-upload {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAXVBMVEUAAAAzzDPM/8z///8z/2YzmQAzZgAzZv8Amf8AAAAzzP+ZzP8AgADM//8z//8AMwAzzGaZmQD4+Pj//5kAZgD/zGYzmTP/zJmAgAAzMwDMZjPMmTP//wBmMwDwyqYv7S31AAAAAXRSTlMAQObYZgAAAAFiS0dEAxEMTPIAAAAHdElNRQfiBhoAOCALTc5BAAAB3klEQVRIx5WUCZKDIBBFAQXEbTTRQbPM/Y85TQMKClm+piplvcdv0YSQINSFfBQAWcHKsqSUc/EBbmnAgedCyje8Xxxxw782LI+zCPORVSWlesPj4qKqETdC3nA8R76uasBr+cJoCmHGdzwadSsxaaPpCiHcPJ6naLQqw3d9J2jEix/AW540msIYZnMMX/et5xnPCNjQC+SrvoUvlh8GzlWW73tcH+YRdk+tIFRqoq6jwPf+Diph5mcjJiEAThkNeQb4MF6uJmej6ShjrJymnR+GjU8YDfLwJk2Wr9DY+LNBi4DHSMHGOcjo418k5Es+TY6vxO94SUU5oUQDXg1QpDlEOBFEu3MOjJKCsfioUNBe0fNqBcfTZaMWdYkKXMUmIF8uAbSo0zx7A+GH9SPDwNqegWD4Oc6yx1dsAuHw61ku2ShsCRoImY4T6fCYlZ0oEMjEl8NG7rd6nVd9bAAjbrCOb1i1PgkkELR7VnpveCV4OLiH1W9dpiGaR5sGH5IQjvPgJKn/Disc9ke755UXzjQ23NTdJRb0NZ5ne16Pp8+HDSEYCPbFvMb0cfuTu3QwcoKOnpf+umFPRpjzSQpkzYe8z/OuPqC+E+5hbhAVXUmsGebx93eLLjzf1L1i/gHK3l4JVuA9nAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wNi0yNlQwMDo1NjozMi0wNDowMOUpNXoAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDYtMjZUMDA6NTY6MzItMDQ6MDCUdI3GAAAAAElFTkSuQmCC");
   margin-bottom: 3px;
+}
+
+.icon-large-upload svg {
+  fill: var(--chestnutBrown);
 }
 
 .icon-folder {
