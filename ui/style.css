@@ -67,6 +67,7 @@ td.iconRow {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 5px 1px 1px black;
 }
 
 
@@ -123,6 +124,7 @@ footer {
   text-align: center;
   border-radius: 1em 1em 0 0;
   color: var(--darkOnyx);
+  box-shadow: 2px -5px 2px black;
 }
 
 /********************* 
@@ -196,7 +198,7 @@ IDs
 }
 
 #linkTable tr:not(:last-child) {
-  border-bottom: solid 1px var(--redPlum);
+  border-bottom: solid 1px black;
 }
 
 #drop-grid {
@@ -350,16 +352,24 @@ Classes
 
 .title {
   background-color: var(--chestnutBrown);
-  padding-left: 1em;
+  padding: 0.5em 1em;
   color: var(--goldCanyon);
   font-family: Optima,Segoe,Segoe UI,Candara,Calibri,Arial,sans-serif;
   margin-bottom: 1em;
   border-radius: 0 0 1em 1em;
+  box-shadow: 5px 4px 2px black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title h1 {
   margin: 0px;
-  padding: 0.5rem;
+}
+
+.title svg {
+  height: 40px;
+  width: 40px;
 }
 
 .highlight {
