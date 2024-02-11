@@ -131,6 +131,29 @@ footer {
 IDs
  ********************/
 
+ #settings {
+  position: relative;
+ }
+
+ #settings #settingMenu {
+  display: none;
+  overflow: hidden;
+  position: absolute;
+}
+
+#settings:hover #settingMenu {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--chestnutBrown);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#settings #settingMenu span:hover {
+  cursor: pointer;
+  filter: brightness(85%);
+}
+
 #icHolder {
   display: flex;
   justify-content: space-between;
