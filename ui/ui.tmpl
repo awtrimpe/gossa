@@ -12,51 +12,10 @@
     <title>{{.Title}}</title>
     <link href="data:image/svg+xml;base64,favicon_will_be_here" rel="icon" type="image/svg+xml" />
     <style type="text/css">css_will_be_here</style>
-    <script>
-        window.ro = {{.Ro}};
-        window.extraPath = {{.ExtraPath}}.slice(0, -1);
-        window.onload = function () { js_will_be_here };
-
-        const themes = {
-            light: {
-                '--redPlum': '#777',
-                '--goldCanyon': '#000040',
-                '--chestnutBrown': '#846868',
-                '--darkOnyx': '#fff',
-            },
-            dark: {
-                '--redPlum': '#782B42',
-                '--goldCanyon': '#C6AC7E',
-                '--chestnutBrown': '#875943',
-                '--darkOnyx': '#373539',
-            },
-            retro: {
-                '--redPlum': '#782B42',
-                '--goldCanyon': '#C6AC7E',
-                '--chestnutBrown': '#875943',
-                '--darkOnyx': '#373539',
-            },
-        };
-
-        function setTheme(themeName) {
-            window.localStorage.setItem('setTheme', themeName);
-            Object.keys(themes[themeName]).forEach((key) => {
-                document.documentElement.style.setProperty(key, themes[themeName][key]);
-            });
-        }
-
-        window.onload = () => {
-            if (window.localStorage.getItem('setTheme')) {
-                setTheme(window.localStorage.getItem('setTheme'));
-            }
-            const menu = document.getElementById('settingMenu');
-            Object.keys(themes).forEach((name) => {
-                const link = document.createElement('span');
-                link.innerText = name;
-                link.setAttribute('onclick', `setTheme('${name}')`);
-                menu.appendChild(link);
-            });
-        };
+    <script type="text/javascript">
+        window.ro = {{.Ro}}
+        window.extraPath = {{.ExtraPath}}.slice(0, -1)
+        window.onload = function () { js_will_be_here }
     </script>
 </head>
 
