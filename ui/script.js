@@ -6,58 +6,58 @@ function cancelDefault(e) {
   e.stopPropagation();
 }
 
-const warningMsg = () => "Leaving will interrupt transfer?\n";
-const rmMsg = () => !confirm("Remove file?\n");
-const ensureMove = () => !confirm("move items?");
+const warningMsg = () => 'Leaving will interrupt transfer?\n';
+const rmMsg = () => !confirm('Remove file?\n');
+const ensureMove = () => !confirm('move items?');
 const isRo = () => window.ro;
 
-const upBarName = document.getElementById("upBarName");
-const upBarPc = document.getElementById("upBarPc");
-const upGrid = document.getElementById("drop-grid");
-const pics = document.getElementById("pics");
-const picsHolder = document.getElementById("picsHolder");
-const video = document.getElementById("video");
-const videoHolder = document.getElementById("videoHolder");
-const manualUpload = document.getElementById("clickupload");
-const pdf = document.getElementById("pdf");
-const help = document.getElementById("help");
-const okBadge = document.getElementById("ok");
-const sadBadge = document.getElementById("sad");
-const pageTitle = document.head.querySelector("title");
-const pageH1 = document.body.querySelector("h1");
-const editor = document.getElementById("text-editor");
-const crossIcon = document.getElementById("quitAll");
-const toast = document.getElementById("toast");
-const table = document.getElementById("linkTable");
+const upBarName = document.getElementById('upBarName');
+const upBarPc = document.getElementById('upBarPc');
+const upGrid = document.getElementById('drop-grid');
+const pics = document.getElementById('pics');
+const picsHolder = document.getElementById('picsHolder');
+const video = document.getElementById('video');
+const videoHolder = document.getElementById('videoHolder');
+const manualUpload = document.getElementById('clickupload');
+const pdf = document.getElementById('pdf');
+const help = document.getElementById('help');
+const okBadge = document.getElementById('ok');
+const sadBadge = document.getElementById('sad');
+const pageTitle = document.head.querySelector('title');
+const pageH1 = document.body.querySelector('h1');
+const editor = document.getElementById('text-editor');
+const crossIcon = document.getElementById('quitAll');
+const toast = document.getElementById('toast');
+const table = document.getElementById('linkTable');
 const transparentPixel =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 // helpers
 let allA;
 let imgsIndex;
 let allImgs;
-const decode = (a) => decodeURIComponent(a).replace(location.origin, "");
-const getArrowSelected = () => document.querySelector(".arrow-selected");
+const decode = (a) => decodeURIComponent(a).replace(location.origin, '');
+const getArrowSelected = () => document.querySelector('.arrow-selected');
 const getASelected = () =>
   !getArrowSelected() ?
   false :
-  getArrowSelected().parentElement.parentElement.querySelectorAll("a")[0];
+  getArrowSelected().parentElement.parentElement.querySelectorAll('a')[0];
 const prependPath = (a) =>
-  a.startsWith("/") ? a : decodeURI(location.pathname) + a;
+  a.startsWith('/') ? a : decodeURI(location.pathname) + a;
 const prevent = (e) => e.preventDefault();
 const flicker = (w) =>
-  w.classList.remove("runFade") ||
+  w.classList.remove('runFade') ||
   void w.offsetWidth ||
-  w.classList.add("runFade"); // eslint-disable-line
+  w.classList.add('runFade'); // eslint-disable-line
 
-const encodeURIHash = (e) => encodeURI(e).replaceAll("#", "%23");
+const encodeURIHash = (e) => encodeURI(e).replaceAll('#', '%23');
 
 // Manual upload
 manualUpload.addEventListener(
-  "change",
+  'change',
   () =>
   Array.from(manualUpload.files).forEach(
-    (f) => isDupe(f.name) || postFile(f, "/" + f.name),
+    (f) => isDupe(f.name) || postFile(f, '/' + f.name),
   ),
   false,
 );
@@ -66,21 +66,21 @@ manualUpload.addEventListener(
 async function browseTo(href, flickerDone, skipHistory) {
   try {
     const r = await fetch(href, {
-      credentials: "include",
+      credentials: 'include',
     });
     const t = await r.text();
-    const parsed = new DOMParser().parseFromString(t, "text/html");
+    const parsed = new DOMParser().parseFromString(t, 'text/html');
 
-    table.innerHTML = parsed.getElementById("linkTable").innerHTML;
-    const title = parsed.head.querySelector("title").innerText;
+    table.innerHTML = parsed.getElementById('linkTable').innerHTML;
+    const title = parsed.head.querySelector('title').innerText;
     // check if is current path - if so skip following
     if (pageTitle.innerText !== title) {
       if (!skipHistory) {
         const escaped = encodeURIHash(window.extraPath + title);
-        history.pushState({}, "", escaped);
+        history.pushState({}, '', escaped);
       }
       pageTitle.innerText = title;
-      pageH1.innerText = "." + title;
+      pageH1.innerText = '.' + title;
       setTitle();
     }
 
@@ -121,7 +121,7 @@ window.onClickLink = (e) => {
     videoOn(a.href);
     return false;
     // let html be displayed naturally
-  } else if (a.innerText.endsWith(".html")) {
+  } else if (a.innerText.endsWith('.html')) {
     return true;
   } else if (isPdf(a.href)) {
     openPDF(a.href);
@@ -140,19 +140,19 @@ function pushSoftState(d) {
     return;
   }
   softStatePushed = true;
-  history.pushState({}, "", encodeURIHash(d));
+  history.pushState({}, '', encodeURIHash(d));
 }
 
 const refresh = () => browseTo(location.href, true);
 
 const softPrev = () =>
   history.replaceState({},
-    "",
-    location.href.split("/").slice(0, -1).join("/") + "/",
+    '',
+    location.href.split('/').slice(0, -1).join('/') + '/',
   );
 
 const isAtExtraPath = (url) =>
-  location.origin + window.extraPath + "/../" === url;
+  location.origin + window.extraPath + '/../' === url;
 const prevPage = (url, skipHistory) =>
   window.quitAll() || isAtExtraPath(url) || browseTo(url, false, skipHistory);
 
@@ -161,19 +161,19 @@ window.onpopstate = () => prevPage(location.href, true);
 // RPC
 function upload(id, what, path, cbDone, cbErr, cbUpdate) {
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", location.origin + window.extraPath + "/post");
-  xhr.setRequestHeader("gossa-path", path);
-  xhr.upload.addEventListener("load", cbDone);
-  xhr.upload.addEventListener("progress", cbUpdate);
-  xhr.upload.addEventListener("error", cbErr);
+  xhr.open('POST', location.origin + window.extraPath + '/post');
+  xhr.setRequestHeader('gossa-path', path);
+  xhr.upload.addEventListener('load', cbDone);
+  xhr.upload.addEventListener('progress', cbUpdate);
+  xhr.upload.addEventListener('error', cbErr);
   xhr.upload.id = id;
   xhr.send(what);
 }
 
 function rpc(call, args, cb) {
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", location.origin + window.extraPath + "/rpc");
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.open('POST', location.origin + window.extraPath + '/rpc');
+  xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
   xhr.send(
     JSON.stringify({
       call,
@@ -184,9 +184,9 @@ function rpc(call, args, cb) {
   xhr.onerror = () => flicker(sadBadge);
 }
 
-const mkdirCall = (path, cb) => rpc("mkdirp", [prependPath(path)], cb);
-const rmCall = (path1, cb) => rpc("rm", [prependPath(path1)], cb);
-const mvCall = (path1, path2, cb) => rpc("mv", [path1, path2], cb);
+const mkdirCall = (path, cb) => rpc('mkdirp', [prependPath(path)], cb);
+const rmCall = (path1, cb) => rpc('rm', [prependPath(path1)], cb);
+const mvCall = (path1, path2, cb) => rpc('mv', [path1, path2], cb);
 
 // File upload
 let totalDone = 0;
@@ -194,9 +194,9 @@ let totalUploads = 0;
 let totalUploadsSize = 0;
 let totalUploadedSize = [];
 
-const dupe = (test) => allA.find((a) => a.innerHTML.replace("/", "") === test);
+const dupe = (test) => allA.find((a) => a.innerHTML.replace('/', '') === test);
 const isDupe = (t) =>
-  dupe(t) ? alert(t + " already already exists") || true : false;
+  dupe(t) ? alert(t + ' already already exists') || true : false;
 
 function shouldRefresh() {
   totalDone += 1;
@@ -206,8 +206,8 @@ function shouldRefresh() {
     totalUploads = 0;
     totalUploadsSize = 0;
     totalUploadedSize = [];
-    upBarPc.style.display = upBarName.style.display = "none";
-    table.classList.remove("uploading-table");
+    upBarPc.style.display = upBarName.style.display = 'none';
+    table.classList.remove('uploading-table');
     setTimeout(refresh, 200);
   }
 }
@@ -215,7 +215,7 @@ function shouldRefresh() {
 function updatePercent(ev) {
   totalUploadedSize[ev.target.id] = ev.loaded;
   const ttlDone = totalUploadedSize.reduce((s, x) => s + x);
-  const pc = Math.floor((100 * ttlDone) / totalUploadsSize) + "%";
+  const pc = Math.floor((100 * ttlDone) / totalUploadsSize) + '%';
   upBarPc.innerText = pc;
   upBarPc.style.width = pc;
 }
@@ -225,11 +225,11 @@ function postFile(file, path) {
   path = decodeURI(location.pathname).slice(0, -1) + path;
   window.onbeforeunload = warningMsg;
 
-  table.classList.add("uploading-table");
-  upBarPc.style.display = upBarName.style.display = "block";
+  table.classList.add('uploading-table');
+  upBarPc.style.display = upBarName.style.display = 'block';
   totalUploads += 1;
   totalUploadsSize += file.size;
-  upBarName.innerText = totalUploads > 1 ? totalUploads + " files" : file.name;
+  upBarName.innerText = totalUploads > 1 ? totalUploads + ' files' : file.name;
 
   const formData = new FormData();
   formData.append(file.name, file);
@@ -254,7 +254,7 @@ function parseDomItem(domFile, shouldCheckDupes) {
     domFile.file((f) => postFile(f, domFile.fullPath));
   } else {
     // remove absolute path
-    const f = domFile.fullPath.startsWith("/") ?
+    const f = domFile.fullPath.startsWith('/') ?
       domFile.fullPath.slice(1) :
       domFile.fullPath;
     mkdirCall(f, () => parseDomFolder(domFile));
@@ -263,7 +263,7 @@ function parseDomItem(domFile, shouldCheckDupes) {
 
 function pushEntry(entry) {
   if (!entry.webkitGetAsEntry && !entry.getAsEntry) {
-    return alert("Unsupported browser ! Please update to chrome/firefox.");
+    return alert('Unsupported browser ! Please update to chrome/firefox.');
   } else {
     entry = entry.webkitGetAsEntry() || entry.getAsEntry();
   }
@@ -272,30 +272,30 @@ function pushEntry(entry) {
 }
 
 window.titleClick = (e) => {
-  const p = Array.from(document.querySelector("h1").childNodes).map(
+  const p = Array.from(document.querySelector('h1').childNodes).map(
     (k) => k.innerText,
   );
   const i = p.findIndex((s) => s === e.target.innerText);
   const dst = p
     .slice(0, i + 1)
-    .join("")
+    .join('')
     .slice(1);
   const target = location.origin + window.extraPath + encodeURIHash(dst);
   browseTo(target, false);
 };
 
 // Move files and folders
-const isFolder = (e) => e && e.href && e.innerText.endsWith("/");
+const isFolder = (e) => e && e.href && e.innerText.endsWith('/');
 
 const setBackgroundLinks = (t) => {
-  t.classList.add("highlight");
+  t.classList.add('highlight');
 };
 
-const getLink = () => document.querySelector(".highlight") || {};
+const getLink = () => document.querySelector('.highlight') || {};
 
 const resetBackgroundLinks = () => {
   try {
-    getLink().classList.remove("highlight");
+    getLink().classList.remove('highlight');
   } catch (e) {
     /* */
   }
@@ -303,9 +303,9 @@ const resetBackgroundLinks = () => {
 
 // Not the nicest - sometimes, upon hover, firefox reports nodeName === '#text', and chrome reports nodeName === 'A'...
 const getClosestRow = (t) =>
-  t.nodeName === "#text" ?
+  t.nodeName === '#text' ?
   t.parentElement.parentElement :
-  t.nodeName === "A" ?
+  t.nodeName === 'A' ?
   t.parentElement :
   t;
 
@@ -316,7 +316,7 @@ upGrid.ondragend =
   upGrid.ondragleave =
   (e) => {
     cancelDefault(e);
-    upGrid.style.display = "none";
+    upGrid.style.display = 'none';
   };
 
 // Handle hover
@@ -329,8 +329,8 @@ document.ondragenter = (e) => {
 
   // Display upload grid when uploading new elements
   if (!draggingSrc) {
-    upGrid.style.display = "flex";
-    e.dataTransfer.dropEffect = "copy";
+    upGrid.style.display = 'flex';
+    e.dataTransfer.dropEffect = 'copy';
     // Or highlight entry if drag and drop
   } else if (draggingSrc) {
     const t = getClosestRow(e.target);
@@ -354,7 +354,7 @@ document.ondrop = (e) => {
   if (window.ro) return;
 
   cancelDefault(e);
-  upGrid.style.display = "none";
+  upGrid.style.display = 'none';
   const t = getLink().firstChild;
 
   // move to a folder
@@ -373,8 +373,8 @@ document.ondrop = (e) => {
 };
 
 // Notepad
-const isEditorMode = () => editor.style.display === "block";
-const textTypes = [".txt", ".rtf", ".md", ".markdown", ".log", ".yaml", ".yml"];
+const isEditorMode = () => editor.style.display === 'block';
+const textTypes = ['.txt', '.rtf', '.md', '.markdown', '.log', '.yaml', '.yml'];
 const isTextFile = (src) =>
   src && textTypes.find((type) => src.toLocaleLowerCase().includes(type));
 let fileEdited;
@@ -388,7 +388,7 @@ function saveText(quitting) {
     formData,
     path,
     () => {
-      toast.style.display = "none";
+      toast.style.display = 'none';
       if (!quitting) return;
       clearInterval(window.padTimer);
       window.onbeforeunload = null;
@@ -397,10 +397,10 @@ function saveText(quitting) {
       refresh();
     },
     () => {
-      toast.style.display = "block";
+      toast.style.display = 'block';
       if (!quitting) return;
       alert(
-        "cant save!\r\nleave window open to resume saving\r\nwhen connection back up",
+        'cant save!\r\nleave window open to resume saving\r\nwhen connection back up',
       );
     },
   );
@@ -419,35 +419,35 @@ async function padOn(a) {
     try {
       fileEdited = a.innerHTML;
       const f = await fetch(a.href, {
-        credentials: "include",
+        credentials: 'include',
         headers: new Headers({
-          pragma: "no-cache",
-          "cache-control": "no-cache",
+          pragma: 'no-cache',
+          'cache-control': 'no-cache',
         }),
       });
       editor.value = await f.text();
     } catch (error) {
-      return alert("cant read file");
+      return alert('cant read file');
     }
   } else {
-    fileEdited = prompt("new filename", "");
+    fileEdited = prompt('new filename', '');
     if (!fileEdited) {
       return;
     }
-    fileEdited = isTextFile(fileEdited) ? fileEdited : fileEdited + ".txt";
+    fileEdited = isTextFile(fileEdited) ? fileEdited : fileEdited + '.txt';
     if (isDupe(fileEdited)) {
       return;
     }
-    editor.value = "";
+    editor.value = '';
   }
 
   setCursorTo(fileEdited);
-  editor.style.display = crossIcon.style.display = "block";
-  table.style.display = "none";
+  editor.style.display = crossIcon.style.display = 'block';
+  table.style.display = 'none';
   editor.focus();
   window.onbeforeunload = warningMsg;
   window.padTimer = setInterval(saveText, 5000);
-  pushSoftState("?editor=" + fileEdited);
+  pushSoftState('?editor=' + fileEdited);
 }
 
 window.displayPad = padOn;
@@ -455,16 +455,16 @@ window.displayPad = padOn;
 // quit pictures or editor
 function resetView() {
   softStatePushed = false;
-  table.style.display = "table";
+  table.style.display = 'table';
   picsHolder.src = transparentPixel;
-  videoHolder.src = "";
-  pdf.innerHTML = "";
+  videoHolder.src = '';
+  pdf.innerHTML = '';
   editor.style.display =
     pics.style.display =
     video.style.display =
     pdf.style.display =
     crossIcon.style.display =
-    "none";
+    'none';
   scrollToArrow();
 }
 
@@ -473,20 +473,20 @@ window.quitAll = () =>
 
 // Mkdir icon
 window.mkdirBtn = function () {
-  const folder = prompt("new folder name", "");
+  const folder = prompt('new folder name', '');
   if (folder && !isDupe(folder)) {
     mkdirCall(folder, refresh);
   }
 };
 
 // Icon click handler
-const getBtnA = (e) => e.target.closest("tr").querySelector("a");
+const getBtnA = (e) => e.target.closest('tr').querySelector('a');
 
 window.rm = (e) => {
   if (window.ro) return true;
   clearTimeout(window.clickToken);
   const target = e.key ? getASelected() : getBtnA(e);
-  if (target.innerText === "../") return;
+  if (target.innerText === '../') return;
   if (rmMsg()) return;
 
   moveArrow();
@@ -503,8 +503,8 @@ window.rename = (e, commit) => {
   }
 
   const target = e.key ? getASelected() : getBtnA(e);
-  if (target.innerText === "../") return;
-  const chg = prompt("rename to", target.innerText);
+  if (target.innerText === '../') return;
+  const chg = prompt('rename to', target.innerText);
   if (chg && !isDupe(chg)) {
     mvCall(prependPath(target.innerText), prependPath(chg), refresh);
   }
@@ -534,7 +534,7 @@ function clearArrowSelected() {
   if (!arr) {
     return;
   }
-  arr.classList.remove("arrow-selected");
+  arr.classList.remove('arrow-selected');
 }
 
 window.setCursorTo = setCursorTo;
@@ -543,27 +543,27 @@ function setCursorTo(where) {
   if (!where) return false;
   clearArrowSelected();
   let a = allA.find(
-    (el) => el.innerText === where || el.innerText === where + "/",
+    (el) => el.innerText === where || el.innerText === where + '/',
   );
 
   if (!a) {
-    if (allA[0].innerText === "../") {
+    if (allA[0].innerText === '../') {
       a = allA[1] || allA[0];
     } else {
       a = allA[0];
     }
   }
 
-  const icon = a.parentElement.parentElement.querySelectorAll(".arrow-icon")[0];
-  icon.classList.add("arrow-selected");
+  const icon = a.parentElement.parentElement.querySelectorAll('.arrow-icon')[0];
+  icon.classList.add('arrow-selected');
   scrollToArrow();
   storeArrow(where);
   return true;
 }
 
 function moveArrow(down) {
-  const all = Array.from(document.querySelectorAll(".arrow-icon"));
-  let i = all.findIndex((el) => el.classList.contains("arrow-selected"));
+  const all = Array.from(document.querySelectorAll('.arrow-icon'));
+  let i = all.findIndex((el) => el.classList.contains('arrow-selected'));
 
   clearArrowSelected();
 
@@ -573,14 +573,14 @@ function moveArrow(down) {
     i = all[i - 1] ? i - 1 : all.length - 1;
   }
 
-  all[i].classList.add("arrow-selected");
+  all[i].classList.add('arrow-selected');
   storeArrow(getASelected().innerText);
   scrollToArrow();
 }
 
 const storeArrow = (src) =>
   localStorage.setItem(
-    "last-selected" + window.extraPath + location.pathname,
+    'last-selected' + window.extraPath + location.pathname,
     src,
   );
 
@@ -619,27 +619,27 @@ function movePage(up) {
 }
 
 // Pictures carousel
-const picTypes = [".jpg", ".jpeg", ".png", ".gif"];
+const picTypes = ['.jpg', '.jpeg', '.png', '.gif'];
 const isPic = (src) =>
   src && picTypes.find((type) => src.toLocaleLowerCase().includes(type));
-const isPicMode = () => pics.style.display === "flex";
+const isPicMode = () => pics.style.display === 'flex';
 window.picsNav = () => picsNav(true);
 
 function setImage() {
   const src = allImgs[imgsIndex];
   picsHolder.src = src;
-  const name = src.split("/").pop();
+  const name = src.split('/').pop();
   setCursorTo(decodeURI(name));
-  history.replaceState({}, "", encodeURIHash(name));
+  history.replaceState({}, '', encodeURIHash(name));
 }
 
 function picsOn(href) {
   imgsIndex = allImgs.findIndex((el) => el.includes(href));
   setImage();
-  table.style.display = "none";
-  crossIcon.style.display = "block";
-  pics.style.display = "flex";
-  const name = href.split("/").pop();
+  table.style.display = 'none';
+  crossIcon.style.display = 'block';
+  pics.style.display = 'flex';
+  const name = href.split('/').pop();
   pushSoftState(name);
   return true;
 }
@@ -671,7 +671,7 @@ function picsNav(down) {
 let picsTouchStart = 0;
 
 picsHolder.addEventListener(
-  "touchstart",
+  'touchstart',
   (e) => {
     picsTouchStart = e.changedTouches[0].screenX;
   },
@@ -679,7 +679,7 @@ picsHolder.addEventListener(
 );
 
 picsHolder.addEventListener(
-  "touchend",
+  'touchend',
   (e) => {
     if (e.changedTouches[0].screenX < picsTouchStart) {
       picsNav(true);
@@ -691,10 +691,10 @@ picsHolder.addEventListener(
 );
 
 // Video player
-const videosTypes = [".mp4", ".webm", ".ogv", ".ogg", ".mp3", ".flac", ".wav"];
+const videosTypes = ['.mp4', '.webm', '.ogv', '.ogg', '.mp3', '.flac', '.wav'];
 const isVideo = (src) =>
   src && videosTypes.find((type) => src.toLocaleLowerCase().includes(type));
-const isVideoMode = () => video.style.display === "flex";
+const isVideoMode = () => video.style.display === 'flex';
 const videoFs = () => video.requestFullscreen();
 const videoFf = (future) => {
   videoHolder.currentTime += future ? 10 : -10;
@@ -705,13 +705,13 @@ const videoSound = (up) => {
 videoHolder.oncanplay = () => videoHolder.play();
 
 async function videoOn(src) {
-  const name = src.split("/").pop();
-  table.style.display = "none";
-  crossIcon.style.display = "block";
-  video.style.display = "flex";
+  const name = src.split('/').pop();
+  table.style.display = 'none';
+  crossIcon.style.display = 'block';
+  video.style.display = 'flex';
   videoHolder.pause();
 
-  const time = localStorage.getItem("video-time" + src);
+  const time = localStorage.getItem('video-time' + src);
   videoHolder.currentTime = parseInt(time) || 0;
 
   videoHolder.src = src;
@@ -723,7 +723,7 @@ function videosOff() {
   if (!isVideoMode()) {
     return;
   }
-  localStorage.setItem("video-time" + videoHolder.src, videoHolder.currentTime);
+  localStorage.setItem('video-time' + videoHolder.src, videoHolder.currentTime);
   resetView();
   softPrev();
   return true;
@@ -734,19 +734,19 @@ window.videodl = function () {
 };
 
 // PDF Viewer
-const pdfTypes = [".pdf"];
+const pdfTypes = ['.pdf'];
 const isPdf = (src) =>
   src && pdfTypes.find((type) => src.toLocaleLowerCase().includes(type));
-const isPdfMode = () => pdf.style.display === "flex";
+const isPdfMode = () => pdf.style.display === 'flex';
 
 function openPDF(src) {
-  const name = src.split("/").pop();
-  table.style.display = "none";
-  crossIcon.style.display = "block";
-  pdf.style.display = "flex";
-  const pdfEmbed = document.createElement("embed");
-  pdfEmbed.setAttribute("src", src + "#toolbar=0");
-  pdfEmbed.setAttribute("type", "application/pdf");
+  const name = src.split('/').pop();
+  table.style.display = 'none';
+  crossIcon.style.display = 'block';
+  pdf.style.display = 'flex';
+  const pdfEmbed = document.createElement('embed');
+  pdfEmbed.setAttribute('src', src + '#toolbar=0');
+  pdfEmbed.setAttribute('type', 'application/pdf');
   pdf.appendChild(pdfEmbed);
   pushSoftState(decodeURI(name));
   return false;
@@ -762,21 +762,21 @@ function pdfOff() {
 }
 
 // help
-const isHelpMode = () => help.style.display === "block";
+const isHelpMode = () => help.style.display === 'block';
 
 const helpToggle = () => (isHelpMode() ? helpOff() : helpOn());
 
 function helpOn() {
-  help.style.display = "block";
-  table.style.display = "none";
+  help.style.display = 'block';
+  table.style.display = 'none';
 }
 
 window.helpOff = helpOff;
 
 function helpOff() {
   if (!isHelpMode()) return;
-  help.style.display = "none";
-  table.style.display = "table";
+  help.style.display = 'none';
+  table.style.display = 'table';
   return true;
 }
 
@@ -789,7 +789,7 @@ function onPaste() {
   }
   const a = getASelected();
   const root = cuts.pop();
-  const filename = root.split("/").pop();
+  const filename = root.split('/').pop();
   const pwd = decodeURIComponent(location.pathname);
   const dest = isFolder(a) ? pwd + a.innerHTML : pwd;
   mvCall(root, dest + filename, onPaste);
@@ -797,51 +797,51 @@ function onPaste() {
 
 function onCut() {
   const a = getASelected();
-  a.classList.add("linkSelected");
+  a.classList.add('linkSelected');
   cuts.push(prependPath(decode(a.href)));
 }
 
 function dl(a) {
   const orig = a.onclick;
-  a.onclick = "";
+  a.onclick = '';
 
   // download as zip if folder
   if (isFolder(a)) {
     const loc = a.href;
     a.href =
       window.extraPath +
-      "/zip?zipPath=" +
+      '/zip?zipPath=' +
       encodeURIComponent(prependPath(a.innerText)) +
-      "&zipName=" +
+      '&zipName=' +
       encodeURIComponent(a.innerText.slice(0, -1));
     a.click();
     a.href = loc;
   } else {
     a.download = a.innerText;
     a.click();
-    a.download = "";
+    a.download = '';
   }
 
   a.onclick = orig;
 }
 
 // Kb handler
-let typedPath = "";
+let typedPath = '';
 let typedToken = null;
 
 function cpPath() {
-  const t = document.createElement("textarea");
+  const t = document.createElement('textarea');
   t.value = getASelected().href;
   document.body.appendChild(t);
   t.select();
-  document.execCommand("copy");
+  document.execCommand('copy');
   document.body.removeChild(t);
 }
 
 document.body.addEventListener(
-  "keydown",
+  'keydown',
   (e) => {
-    if (e.code === "Escape") {
+    if (e.code === 'Escape') {
       return resetBackgroundLinks() || window.quitAll();
     }
 
@@ -855,14 +855,14 @@ document.body.addEventListener(
 
     if (isPicMode()) {
       switch (e.code) {
-        case "ArrowLeft":
-        case "ArrowUp":
+        case 'ArrowLeft':
+        case 'ArrowUp':
           return prevent(e) || picsNav(false);
 
-        case "Enter":
-        case "Tab":
-        case "ArrowRight":
-        case "ArrowDown":
+        case 'Enter':
+        case 'Tab':
+        case 'ArrowRight':
+        case 'ArrowDown':
           return prevent(e) || picsNav(true);
       }
       return;
@@ -870,15 +870,15 @@ document.body.addEventListener(
 
     if (isVideoMode()) {
       switch (e.code) {
-        case "ArrowDown":
-        case "ArrowUp":
-          return prevent(e) || videoSound(e.code === "ArrowUp");
+        case 'ArrowDown':
+        case 'ArrowUp':
+          return prevent(e) || videoSound(e.code === 'ArrowUp');
 
-        case "ArrowLeft":
-        case "ArrowRight":
-          return prevent(e) || videoFf(e.code === "ArrowRight");
+        case 'ArrowLeft':
+        case 'ArrowRight':
+          return prevent(e) || videoFf(e.code === 'ArrowRight');
 
-        case "KeyF":
+        case 'KeyF':
           return prevent(e) || videoFs();
       }
       return;
@@ -887,68 +887,68 @@ document.body.addEventListener(
     // Ctrl keys
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey) {
       switch (e.code) {
-        case "KeyC":
+        case 'KeyC':
           return prevent(e) || isRo() || cpPath();
 
-        case "KeyH":
+        case 'KeyH':
           return prevent(e) || isRo() || helpToggle();
 
-        case "KeyX":
+        case 'KeyX':
           return prevent(e) || isRo() || onCut();
 
-        case "KeyR":
+        case 'KeyR':
           return prevent(e) || refresh();
 
-        case "KeyV":
+        case 'KeyV':
           return prevent(e) || isRo() || ensureMove() || onPaste();
 
-        case "Backspace":
+        case 'Backspace':
           return prevent(e) || isRo() || window.rm(e);
 
-        case "KeyE":
+        case 'KeyE':
           return prevent(e) || isRo() || window.rename(e);
 
-        case "KeyM":
+        case 'KeyM':
           return prevent(e) || isRo() || window.mkdirBtn();
 
-        case "KeyU":
+        case 'KeyU':
           return prevent(e) || isRo() || manualUpload.click();
 
-        case "Enter":
-        case "ArrowRight":
+        case 'Enter':
+        case 'ArrowRight':
           return prevent(e) || dl(getASelected());
       }
     }
 
     switch (e.code) {
-      case "Tab":
-      case "ArrowDown":
+      case 'Tab':
+      case 'ArrowDown':
         return prevent(e) || moveArrow(true);
 
-      case "ArrowUp":
+      case 'ArrowUp':
         return prevent(e) || moveArrow(false);
 
-      case "Enter":
-      case "ArrowRight":
+      case 'Enter':
+      case 'ArrowRight':
         return prevent(e) || window.onClickLink();
 
-      case "ArrowLeft":
-        return prevent(e) || prevPage(location.href + "../");
+      case 'ArrowLeft':
+        return prevent(e) || prevPage(location.href + '../');
 
-      case "PageDown":
-      case "PageUp":
-        return prevent(e) || movePage(e.key === "PageUp");
+      case 'PageDown':
+      case 'PageUp':
+        return prevent(e) || movePage(e.key === 'PageUp');
 
-      case "Space":
+      case 'Space':
         return prevent(e) || movePage(e.shiftKey);
     }
 
     // text search
-    if (e.code.includes("Key") && !e.ctrlKey && !e.metaKey) {
-      typedPath += e.code.replace("Key", "").toLocaleLowerCase();
+    if (e.code.includes('Key') && !e.ctrlKey && !e.metaKey) {
+      typedPath += e.code.replace('Key', '').toLocaleLowerCase();
       clearTimeout(typedToken);
       typedToken = setTimeout(() => {
-        typedPath = "";
+        typedPath = '';
       }, 1000);
 
       const a =
@@ -967,24 +967,24 @@ document.body.addEventListener(
 
 function setTitle() {
   pageH1.innerHTML =
-    "<span>" + pageH1.innerText.split("/").join("/</span><span>") + "</span>";
+    '<span>' + pageH1.innerText.split('/').join('/</span><span>') + '</span>';
 }
 
 function init() {
-  allA = Array.from(document.querySelectorAll("a.list-links"));
+  allA = Array.from(document.querySelectorAll('a.list-links'));
   allImgs = allA.map((el) => el.href).filter(isPic);
   imgsIndex = softStatePushed = 0;
 
   const successRestore = setCursorTo(
     localStorage.getItem(
-      "last-selected" + window.extraPath + location.pathname,
+      'last-selected' + window.extraPath + location.pathname,
     ),
   );
   if (!successRestore) {
-    const entries = table.querySelectorAll(".arrow-icon");
+    const entries = table.querySelectorAll('.arrow-icon');
     entries.length === 1 ?
-      entries[0].classList.add("arrow-selected") :
-      entries[1].classList.add("arrow-selected");
+      entries[0].classList.add('arrow-selected') :
+      entries[1].classList.add('arrow-selected');
   }
 
   setTitle();
@@ -992,12 +992,12 @@ function init() {
 
   if (cuts.length) {
     const match = allA.filter((a) => cuts.find((c) => c === decode(a.href)));
-    match.forEach((m) => m.classList.add("linkSelected"));
+    match.forEach((m) => m.classList.add('linkSelected'));
   }
 
   // restore editor if was queried
-  if (location.search.includes("?editor=")) {
-    const cleanURL = location.href.replace("?editor=", "");
+  if (location.search.includes('?editor=')) {
+    const cleanURL = location.href.replace('?editor=', '');
     const matchingA = allA.find((a) => a.href === cleanURL);
     padOn(matchingA);
   }
@@ -1007,44 +1007,44 @@ function init() {
 // THEME
 const themes = {
   light: {
-    "--redPlum": "#777",
-    "--goldCanyon": "#000040",
-    "--chestnutBrown": "#846868",
-    "--darkOnyx": "#fff",
+    '--redPlum': '#777',
+    '--goldCanyon': '#000040',
+    '--chestnutBrown': '#846868',
+    '--darkOnyx': '#fff',
   },
   dark: {
-    "--redPlum": "#782B42",
-    "--goldCanyon": "#C6AC7E",
-    "--chestnutBrown": "#875943",
-    "--darkOnyx": "#373539",
+    '--redPlum': '#5d3c18',
+    '--goldCanyon': '#766b65',
+    '--chestnutBrown': '#1e2824',
+    '--darkOnyx': '#0d060f',
   },
   retro: {
-    "--redPlum": "#782B42",
-    "--goldCanyon": "#C6AC7E",
-    "--chestnutBrown": "#875943",
-    "--darkOnyx": "#373539",
+    '--redPlum': '#782B42',
+    '--goldCanyon': '#C6AC7E',
+    '--chestnutBrown': '#875943',
+    '--darkOnyx': '#373539',
   },
 };
 
 window.setTheme = function (themeName) {
-  window.localStorage.setItem("setTheme", themeName);
+  window.localStorage.setItem('setTheme', themeName);
   Object.keys(themes[themeName]).forEach((key) => {
     document.documentElement.style.setProperty(key, themes[themeName][key]);
   });
 };
 
 function generateThemeMenu() {
-  const lastTheme = window.localStorage.getItem("setTheme");
+  const lastTheme = window.localStorage.getItem('setTheme');
   if (lastTheme && Object.keys(themes).includes(lastTheme)) {
-    setTheme(window.localStorage.getItem("setTheme"));
+    setTheme(window.localStorage.getItem('setTheme'));
   } else {
-    window.localStorage.removeItem("setTheme");
+    window.localStorage.removeItem('setTheme');
   }
-  const menu = document.getElementById("settingMenu");
+  const menu = document.getElementById('settingMenu');
   Object.keys(themes).forEach((name) => {
-    const link = document.createElement("a");
+    const link = document.createElement('span');
     link.innerText = name;
-    link.setAttribute("onclick", `setTheme('${name}')`);
+    link.setAttribute('onclick', `setTheme('${name}')`);
     menu.appendChild(link);
   });
 }
