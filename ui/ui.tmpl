@@ -12,7 +12,7 @@
     <title>{{.Title}}</title>
     <link href="data:image/svg+xml;base64,favicon_will_be_here" rel="icon" type="image/svg+xml" />
     <style type="text/css">css_will_be_here</style>
-    <script>
+    <script type="text/javascript">
         window.ro = {{.Ro}}
         window.extraPath = {{.ExtraPath}}.slice(0, -1)
         window.onload = function () { js_will_be_here }
@@ -43,49 +43,96 @@
     <div id="drop-grid"></div>
     <input type="file" id="clickupload" style="display:none"/>
 
-    <h1 onclick="return titleClick(event)">.{{.Title}}</h1>
+    <header>
+        <div class="title">
+            <h1>Gossa</h1>
 
-    <div id="icHolder">
-        {{if not .Ro}}
-            <div style="display:none;" onclick="document.getElementById('clickupload').click()" class="ic icon-large-upload manualUp"></div>
-            <div onclick="window.displayPad()" class="ic icon-large-pad" title="Create TXT file"></div>
-            <div class="ic icon-large-folder" onclick="window.mkdirBtn()" title="Create Folder"></div>
+            <div id="settings">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2788 2.15224C13.9085 2 13.439 2 12.5 2C11.561 2 11.0915 2 10.7212 2.15224C10.2274 2.35523 9.83509 2.74458 9.63056 3.23463C9.53719 3.45834 9.50065 3.7185 9.48635 4.09799C9.46534 4.65568 9.17716 5.17189 8.69017 5.45093C8.20318 5.72996 7.60864 5.71954 7.11149 5.45876C6.77318 5.2813 6.52789 5.18262 6.28599 5.15102C5.75609 5.08178 5.22018 5.22429 4.79616 5.5472C4.47814 5.78938 4.24339 6.1929 3.7739 6.99993C3.30441 7.80697 3.06967 8.21048 3.01735 8.60491C2.94758 9.1308 3.09118 9.66266 3.41655 10.0835C3.56506 10.2756 3.77377 10.437 4.0977 10.639C4.57391 10.936 4.88032 11.4419 4.88029 12C4.88026 12.5581 4.57386 13.0639 4.0977 13.3608C3.77372 13.5629 3.56497 13.7244 3.41645 13.9165C3.09108 14.3373 2.94749 14.8691 3.01725 15.395C3.06957 15.7894 3.30432 16.193 3.7738 17C4.24329 17.807 4.47804 18.2106 4.79606 18.4527C5.22008 18.7756 5.75599 18.9181 6.28589 18.8489C6.52778 18.8173 6.77305 18.7186 7.11133 18.5412C7.60852 18.2804 8.2031 18.27 8.69012 18.549C9.17714 18.8281 9.46533 19.3443 9.48635 19.9021C9.50065 20.2815 9.53719 20.5417 9.63056 20.7654C9.83509 21.2554 10.2274 21.6448 10.7212 21.8478C11.0915 22 11.561 22 12.5 22C13.439 22 13.9085 22 14.2788 21.8478C14.7726 21.6448 15.1649 21.2554 15.3694 20.7654C15.4628 20.5417 15.4994 20.2815 15.5137 19.902C15.5347 19.3443 15.8228 18.8281 16.3098 18.549C16.7968 18.2699 17.3914 18.2804 17.8886 18.5412C18.2269 18.7186 18.4721 18.8172 18.714 18.8488C19.2439 18.9181 19.7798 18.7756 20.2038 18.4527C20.5219 18.2105 20.7566 17.807 21.2261 16.9999C21.6956 16.1929 21.9303 15.7894 21.9827 15.395C22.0524 14.8691 21.9088 14.3372 21.5835 13.9164C21.4349 13.7243 21.2262 13.5628 20.9022 13.3608C20.4261 13.0639 20.1197 12.558 20.1197 11.9999C20.1197 11.4418 20.4261 10.9361 20.9022 10.6392C21.2263 10.4371 21.435 10.2757 21.5836 10.0835C21.9089 9.66273 22.0525 9.13087 21.9828 8.60497C21.9304 8.21055 21.6957 7.80703 21.2262 7C20.7567 6.19297 20.522 5.78945 20.2039 5.54727C19.7799 5.22436 19.244 5.08185 18.7141 5.15109C18.4722 5.18269 18.2269 5.28136 17.8887 5.4588C17.3915 5.71959 16.7969 5.73002 16.3099 5.45096C15.8229 5.17191 15.5347 4.65566 15.5136 4.09794C15.4993 3.71848 15.4628 3.45833 15.3694 3.23463C15.1649 2.74458 14.7726 2.35523 14.2788 2.15224ZM12.5 15C14.1695 15 15.5228 13.6569 15.5228 12C15.5228 10.3431 14.1695 9 12.5 9C10.8305 9 9.47716 10.3431 9.47716 12C9.47716 13.6569 10.8305 15 12.5 15Z" />
+                </svg>
+                <div id="settingMenu"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="icHolder">
+            <h1 onclick="return titleClick(event)">.{{.Title}}</h1>
+            <div style="display: flex; align-items: center;">
+                {{if not .Ro}}
+                    <div onclick="document.getElementById('clickupload').click()" class="ic icon-large-upload manualUp">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                        </svg>
+                    </div>
+                    <div class="hover" onclick="window.displayPad()" title="Create TXT file" style="width: 1.9em;">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
+                            <path fill="#50e6ff" d="M39,16v25c0,1.105-0.895,2-2,2H11c-1.105,0-2-0.895-2-2V7c0-1.105,0.895-2,2-2h17L39,16z"></path><linearGradient id="F8F33TU9HxDNWNbQYRyY3a_XWoSyGbnshH2_gr1" x1="28.529" x2="33.6" y1="15.472" y2="10.4" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3079d6"></stop><stop offset="1" stop-color="#297cd2"></stop></linearGradient><path fill="url(#F8F33TU9HxDNWNbQYRyY3a_XWoSyGbnshH2_gr1)" d="M28,5v9c0,1.105,0.895,2,2,2h9L28,5z"></path>
+                        </svg>
+                    </div>
+                    <div class="hover" onclick="window.mkdirBtn()" title="Create Folder" style="width: 2em; margin-left: 0.5em;">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%" viewBox="0 0 896 896" enable-background="new 0 0 896 896" xml:space="preserve">
+                            <path fill="#FFD967" opacity="1.000000" stroke="none" d="M1.000000,758.000000 C1.000000,596.975098 1.000000,435.950195 1.468657,274.462646 C300.291534,274.000000 598.645752,274.000000 897.000000,274.000000 C897.000000,435.024902 897.000000,596.049805 896.532959,757.581421 C895.233215,758.100525 894.400391,758.123779 893.567627,758.123779 C597.542847,758.125610 301.518036,758.126038 5.493224,758.120850 C3.995482,758.120789 2.497742,758.041992 1.000000,758.000000 z"/>
+                            <path fill="transparent" opacity="1.000000" stroke="none" d="M0.999998,150.000000 C1.000000,100.350334 1.000000,50.700676 1.000000,1.025506 C299.547394,1.025506 598.094788,1.025506 897.000000,1.025506 C897.000000,71.689590 897.000000,142.379776 896.720947,213.869781 C896.052734,214.358139 895.464478,214.126404 895.303284,213.723709 C890.203064,200.982544 877.569946,192.754868 864.299927,192.787048 C721.884521,193.132401 579.467896,193.001450 437.051636,193.008286 C435.389801,193.008362 433.727997,193.104630 431.597229,193.086212 C426.421143,192.957870 421.714050,192.899338 416.880096,192.538025 C400.729614,176.218414 384.924896,159.974045 368.601562,144.268661 C358.540710,134.588654 346.037292,129.121399 332.016632,129.096176 C231.873932,128.916077 131.730576,129.083786 31.587936,128.883530 C20.318930,128.861008 6.752280,136.956573 2.934124,148.618179 C2.735500,149.224838 1.664728,149.545944 0.999998,150.000000 z"/>
+                            <path fill="transparent" opacity="1.000000" stroke="none" d="M897.000000,765.000000 C897.000000,808.983582 897.000000,852.967224 897.000000,896.946289 C598.333313,896.941772 299.666656,896.941772 1.000000,896.941772 C1.000000,853.233032 1.000000,809.582581 1.287111,765.166748 C4.810927,768.332397 9.009633,769.085632 13.956431,769.084045 C300.261688,768.989868 586.566956,769.010864 872.872253,768.945068 C881.063538,768.943176 889.731995,771.005493 897.000000,765.000000 z"/>
+                            <path fill="#FFB900" opacity="1.000000" stroke="none" d="M0.999998,150.468658 C1.664728,149.545944 2.735500,149.224838 2.934124,148.618179 C6.752280,136.956573 20.318930,128.861008 31.587936,128.883530 C131.730576,129.083786 231.873932,128.916077 332.016632,129.096176 C346.037292,129.121399 358.540710,134.588654 368.601562,144.268661 C384.924896,159.974045 400.729614,176.218414 416.582214,192.701416 C401.380127,208.280533 386.446808,223.492386 371.285980,238.473984 C359.883484,249.741714 345.978668,256.736969 329.988525,256.783844 C220.326416,257.105255 110.662994,256.980835 1.000000,257.000000 C1.000000,221.645767 1.000000,186.291550 0.999998,150.468658 z"/>
+                            <path fill="#FFD861" opacity="1.000000" stroke="none" d="M432.066162,193.156006 C433.727997,193.104630 435.389801,193.008362 437.051636,193.008286 C579.467896,193.001450 721.884521,193.132401 864.299927,192.787048 C877.569946,192.754868 890.203064,200.982544 895.303284,213.723709 C895.464478,214.126404 896.052734,214.358139 896.720947,214.334778 C897.000000,233.687561 897.000000,253.375122 897.000000,273.531342 C598.645752,274.000000 300.291534,274.000000 1.468657,274.000000 C1.000000,272.285645 1.000000,270.571289 1.468496,268.414459 C111.763039,267.962280 221.589554,268.084198 331.414215,267.691101 C340.133820,267.659912 349.581696,265.561707 357.358002,261.723328 C366.240082,257.339142 374.292694,250.623978 381.534454,243.697189 C398.745880,227.234390 415.266449,210.049255 432.066162,193.156006 z"/>
+                            <path fill="#DA7B16" opacity="1.000000" stroke="none" d="M897.000000,764.562500 C889.731995,771.005493 881.063538,768.943176 872.872253,768.945068 C586.566956,769.010864 300.261688,768.989868 13.956431,769.084045 C9.009633,769.085632 4.810927,768.332397 1.287111,764.700684 C1.000000,762.958313 1.000000,760.916687 1.000000,758.437500 C2.497742,758.041992 3.995482,758.120789 5.493224,758.120850 C301.518036,758.126038 597.542847,758.125610 893.567627,758.123779 C894.400391,758.123779 895.233215,758.100525 896.532959,758.044067 C897.000000,760.041687 897.000000,762.083313 897.000000,764.562500 z"/>
+                            <path fill="#FFE8A0" opacity="1.000000" stroke="none" d="M431.597229,193.086212 C415.266449,210.049255 398.745880,227.234390 381.534454,243.697189 C374.292694,250.623978 366.240082,257.339142 357.358002,261.723328 C349.581696,265.561707 340.133820,267.659912 331.414215,267.691101 C221.589554,268.084198 111.763039,267.962280 1.468496,267.985992 C1.000000,264.638702 1.000000,261.277435 1.000000,257.458069 C110.662994,256.980835 220.326416,257.105255 329.988525,256.783844 C345.978668,256.736969 359.883484,249.741714 371.285980,238.473984 C386.446808,223.492386 401.380127,208.280533 416.709045,193.004196 C421.714050,192.899338 426.421143,192.957870 431.597229,193.086212 z"/>
+                        </svg>
+                    </div>
+                {{end}}
+            </div>
+        </div>
+
+        <div id="pics" style="display:none;"> <img draggable="false" onclick="window.picsNav()" id="picsHolder" /></div>
+        <div id="video" style="display:none;">
+            <div onclick="window.videodl()" class="icon-dl" id="video-dl"></div>
+            <video controls id="videoHolder"> </video>
+        </div>
+        <div id="pdf" style="display:none;"> </div>
+
+        <table id="linkTable">
+        {{range .RowsFolders}}
+            <tr>
+                <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank" title="Click to rename"></i></td>
+                <td class="arrow"><div class="arrow-icon"></div></td>
+                <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
+                <td class="file-size"><code>{{.Size}}</code></td>
+            </tr>
         {{end}}
-    </div>
+        {{range .RowsFiles}}
+            <tr>
+                <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank" title="Click to rename"></i></td>
+                <td class="arrow"><div class="arrow-icon"></div></td>
+                <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
+                <td class="file-size"><code>{{.Size}}</code></td>
+                <td class="image-preview">
+                    {{if .Image}}
+                        <img src="{{.Href}}" style="width: -webkit-fill-available; max-height: 100%;"/>
+                        <div class="image-preview-hover">
+                            <img src="{{.Href}}"/>
+                        </div>
+                    {{end}}
+                </td>
+            </tr>
+        {{end}}
+        </table>
+    </body>
+        <div id="upBar" class="bar">
+            <span style="display: none;" class="barName" id="upBarName"></span>
+            <div style="display: none; background-color: green;" class="barPc" id="upBarPc">1%</div>
+        </div>
+        <div id="ok" class="notif">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 64 64" style="fill:#40C057;">
+            <path d="M32,6C17.641,6,6,17.641,6,32c0,14.359,11.641,26,26,26s26-11.641,26-26C58,17.641,46.359,6,32,6z M29.081,42.748	l-10.409-9.253l2.657-2.99l7.591,6.747L44,21l3.414,3.414L29.081,42.748z"></path>
+        </svg>
+        </div>
+        <div id="sad" class="notif icon-large-sad-server"></div>
+    </main>
 
-    <div id="pics" style="display:none;"> <img draggable="false" onclick="window.picsNav()" id="picsHolder" /></div>
-    <div id="video" style="display:none;">
-        <div onclick="window.videodl()" class="icon-dl" id="video-dl"></div>
-        <video controls id="videoHolder"> </video>
-    </div>
-    <div id="pdf" style="display:none;"> </div>
-
-    <table id="linkTable">
-    {{range .RowsFolders}}
-        <tr>
-            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
-            <td class="file-size"><code>{{.Size}}</code></td>
-            <td class="arrow"><div class="arrow-icon"></div></td>
-            <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
-        </tr>
-    {{end}}
-    {{range .RowsFiles}}
-        <tr>
-            <td class="iconRow"><i ondblclick="return rm(event)" onclick="return rename(event)" class="btn icon icon-{{.Ext}} icon-blank"></i></td>
-            <td class="file-size"><code>{{.Size}}</code></td>
-            <td class="arrow"><div class="arrow-icon"></div></td>
-            <td class="display-name"><a class="list-links" oncontextmenu="return setCursorTo(event.target.innerText)" onclick="return onClickLink(event)" href="{{.Href}}">{{.Name}}</a></td>
-            {{if .Image}}
-                <td><img src="{{.Href}}" style="max-width: 20em;"/></td>
-            {{end}}
-        </tr>
-    {{end}}
-    </table>
-</body>
-<div id="upBar" class="bar">
-    <span style="display: none;" class="barName" id="upBarName"></span>
-    <div style="display: none; background-color: green;" class="barPc" id="upBarPc">1%</div>
-</div>
-<div id="ok" class="notif icon-large-ok"></div>
-<div id="sad" class="notif icon-large-sad-server"></div>
+    <footer>
+        Contribute to <a href="https://github.com/awtrimpe/gossa">Gossa fork</a>
+    </footer>
 </html>
