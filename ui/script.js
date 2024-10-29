@@ -970,6 +970,27 @@ function setTitle() {
     '<span>' + pageH1.innerText.split('/').join('/</span><span>') + '</span>';
 }
 
+// Settings menu
+const settings = document.querySelector('#settings');
+const settingsMenu = document.querySelector('#settingMenu');
+settings.addEventListener('click', () => {
+  const style = window.getComputedStyle(settingsMenu);
+  switch (style.getPropertyValue('display')) {
+    case 'none':
+      settingsMenu.style.display = 'flex';
+      break;
+    case 'flex':
+      settingsMenu.style.display = 'none';
+      break;
+  }
+});
+// Hides the settings menu if a click occurs outside of settings
+document.addEventListener('click', function (event) {
+  if (!settings.contains(event.target)) {
+    settingsMenu.style.display = 'none';
+  }
+});
+
 function init() {
   allA = Array.from(document.querySelectorAll('a.list-links'));
   allImgs = allA.map((el) => el.href).filter(isPic);
