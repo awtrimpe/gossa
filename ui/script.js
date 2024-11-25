@@ -24,7 +24,8 @@ const help = document.getElementById('help');
 const okBadge = document.getElementById('ok');
 const sadBadge = document.getElementById('sad');
 const pageTitle = document.head.querySelector('title');
-const pageH1 = document.body.querySelector('h1');
+const pageH1Str = '#icHolder > h1';
+const pageH1 = document.body.querySelector(pageH1Str);
 const editor = document.getElementById('text-editor');
 const crossIcon = document.getElementById('quitAll');
 const toast = document.getElementById('toast');
@@ -272,7 +273,7 @@ function pushEntry(entry) {
 }
 
 window.titleClick = (e) => {
-  const p = Array.from(document.querySelector('h1').childNodes).map(
+  const p = Array.from(document.querySelector(pageH1Str).childNodes).map(
     (k) => k.innerText,
   );
   const i = p.findIndex((s) => s === e.target.innerText);
@@ -970,6 +971,27 @@ function setTitle() {
     '<span>' + pageH1.innerText.split('/').join('/</span><span>') + '</span>';
 }
 
+// Settings menu
+const settings = document.querySelector('#settings');
+const settingsMenu = document.querySelector('#settingMenu');
+settings.addEventListener('click', () => {
+  const style = window.getComputedStyle(settingsMenu);
+  switch (style.getPropertyValue('display')) {
+    case 'none':
+      settingsMenu.style.display = 'flex';
+      break;
+    case 'flex':
+      settingsMenu.style.display = 'none';
+      break;
+  }
+});
+// Hides the settings menu if a click occurs outside of settings
+document.addEventListener('click', function (event) {
+  if (!settings.contains(event.target)) {
+    settingsMenu.style.display = 'none';
+  }
+});
+
 function init() {
   allA = Array.from(document.querySelectorAll('a.list-links'));
   allImgs = allA.map((el) => el.href).filter(isPic);
@@ -1041,12 +1063,14 @@ function generateThemeMenu() {
     window.localStorage.removeItem('setTheme');
   }
   const menu = document.getElementById('settingMenu');
-  Object.keys(themes).forEach((name) => {
-    const link = document.createElement('span');
-    link.innerText = name;
-    link.setAttribute('onclick', `setTheme('${name}')`);
-    menu.appendChild(link);
-  });
+  if (menu.children.length === 0) {
+    Object.keys(themes).forEach((name) => {
+      const link = document.createElement('span');
+      link.innerText = name;
+      link.setAttribute('onclick', `setTheme('${name}')`);
+      menu.appendChild(link);
+    });
+  }
 }
 
 init();
