@@ -110,9 +110,9 @@
                 <td class="file-size"><code>{{.Size}}</code></td>
                 <td class="image-preview">
                     {{if .Image}}
-                        <img src="{{.Href}}" style="width: -webkit-fill-available; max-height: 100%;"/>
+                        <img src="/{{.Href}}" onerror="this.src='{{.Href}}';" style="width: -webkit-fill-available; max-height: 100%;"/>
                         <div class="image-preview-hover">
-                            <img src="{{.Href}}"/>
+                            <img src="/{{.Href}}" onerror="this.src='{{.Href}}';"/>
                         </div>
                     {{end}}
                 </td>

@@ -138,7 +138,8 @@ IDs
 #settings #settingMenu {
   display: none;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
+  right: 5px;
   background-color: var(--chestnutBrown);
   padding: 5px;
   border-radius: 5px;
@@ -474,8 +475,8 @@ Classes
   width: 80px;
   height: 80px;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 80px;
+  right: 80px;
 }
 
 .icon-large-folder {
@@ -632,5 +633,8 @@ Classes
   }
   .file-size {
     display: none !important;
+  }
+  #settings #settingMenu {
+    font-size: xx-large;
   }
 }
