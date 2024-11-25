@@ -118,7 +118,7 @@ func replyList(w http.ResponseWriter, r *http.Request, fullPath string, path str
 		href := url.PathEscape(el.Name())
 		name := el.Name()
 		lowerName := strings.ToLower(el.Name())
-		image := strings.HasSuffix(lowerName, ".png") || strings.HasSuffix(lowerName, ".jpeg") || strings.HasSuffix(lowerName, ".jpg")
+		image := strings.HasSuffix(lowerName, ".png") || strings.HasSuffix(lowerName, ".jpeg") || strings.HasSuffix(lowerName, ".jpg") || strings.HasSuffix(lowerName, ".webp")
 
 		if el.IsDir() && strings.HasPrefix(href, "/") {
 			href = strings.Replace(href, "/", "", 1)
