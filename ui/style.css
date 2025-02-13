@@ -655,4 +655,7 @@ Classes
   #settings #settingMenu {
     font-size: xx-large;
   }
+  .action-menu svg {
+    width: 2em;
+  }
 }
