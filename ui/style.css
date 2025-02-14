@@ -55,6 +55,7 @@ i {
 
 table {
   width: 100%;
+  table-layout: fixed;
 }
 
 td.iconRow {
@@ -455,6 +456,23 @@ Classes
   width: 100%;
 }
 
+.action-menu {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.action-menu svg {
+  cursor: pointer;
+  width: 1em;
+  fill: var(--chestnutBrown);
+  transition: all 0.3s ease-in-out;
+}
+
+.action-menu svg:hover {
+  opacity: 0.7;
+}
+
 .barPc {
   width: 1%;
   height: 35px;
@@ -636,5 +654,8 @@ Classes
   }
   #settings #settingMenu {
     font-size: xx-large;
+  }
+  .action-menu svg {
+    width: 2em;
   }
 }

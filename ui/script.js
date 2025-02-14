@@ -620,7 +620,7 @@ function movePage(up) {
 }
 
 // Pictures carousel
-const picTypes = ['.jpg', '.jpeg', '.png', '.gif'];
+const picTypes = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 const isPic = (src) =>
   src && picTypes.find((type) => src.toLocaleLowerCase().includes(type));
 const isPicMode = () => pics.style.display === 'flex';
